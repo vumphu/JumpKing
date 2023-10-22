@@ -4,24 +4,23 @@ using UnityEngine;
 
 public class JumpKingScript : MonoBehaviour
 {
-    public Rigidbody2D rb;
-    public float moveSpeed = 4f;
-    public float moveInput;
-    public LayerMask groundMask;
-    public LayerMask wallMask;
-    public float jumpStartY;
+    public Rigidbody2D rb;    
     public Animator anim;
     public SpriteRenderer sprite;
-    public float fallStartY;
+    public LayerMask groundMask;
+    public LayerMask wallMask;
+    public PhysicsMaterial2D BounceMat, NormalMat;
+
+    public float moveSpeed = 4f;
+    public float moveInput;
     public float collapseThreshold = 25.0f;
     public float fallingHeight;
+    public float initialHeight;
 
-    public PhysicsMaterial2D BounceMat, NormalMat;
+
     public bool isGrounded;
     public bool isCollidingWithWall;
     public bool canJump;
-    public bool spacePressedLastFrame = false;
-    private bool canChangeAnimation = true;
     public float jumpValue = 0.0f;
 
     private void Start()
@@ -29,30 +28,11 @@ public class JumpKingScript : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
         sprite = gameObject.GetComponent<SpriteRenderer>();
-        jumpStartY = transform.position.y;
-        fallStartY = transform.position.y;
     }
 
     private void Update()
     {
         moveInput = Input.GetAxis("Horizontal");
-
-        bool spacePressedThisFrame = Input.GetKeyDown(KeyCode.Space) || Input.GetKey(KeyCode.Space);
-
-        fallingHeight = fallStartY - transform.position.y;
-
-        // Check if the Space key is pressed and can change animation
-        if (spacePressedThisFrame && canChangeAnimation)
-        {
-            HandleSpacePressed();
-        }
-
-        // Track if the Space key was released
-        if (!spacePressedThisFrame && spacePressedLastFrame)
-        {
-            spacePressedLastFrame = false;
-            canChangeAnimation = true; // Reset the ability to change animation
-        }
 
         if(jumpValue == 0.0f && isGrounded)
         {
@@ -70,25 +50,27 @@ public class JumpKingScript : MonoBehaviour
         }
         else
         {
+            anim.SetBool("Collide", false);
             rb.sharedMaterial = NormalMat;
         }
 
         if(Input.GetKey(KeyCode.Space) && isGrounded && canJump)
         {
             rb.velocity = new Vector2(0.0f, rb.velocity.y);
-            jumpValue += 0.2f;
+            jumpValue += 0.1f;
         }
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded && canJump)
         {
+            jumpValue = 3f;
             rb.velocity = new Vector2(0.0f, rb.velocity.y);
         }
 
-        if(jumpValue >= 20f && isGrounded)
+        if(jumpValue >= 10f && isGrounded)
         {
             // float tempx = moveInput * moveSpeed;
             // float tempy = jumpValue;
             // rb.velocity = new Vector2(tempx, tempy);
-            jumpValue = 20f;
+            jumpValue = 10f;
             // Invoke("ResetJump", 0.2f);
         }
 
@@ -101,6 +83,15 @@ public class JumpKingScript : MonoBehaviour
             }
             canJump = true;
         }
+        
+        // Calculate falling height
+        if (!isGrounded && rb.velocity.y < 0 && initialHeight == 0)
+        {
+            initialHeight = transform.position.y;
+        }
+
+        fallingHeight = transform.position.y - initialHeight;
+
         UpdateAnimation();
     }        
 
@@ -110,17 +101,6 @@ public class JumpKingScript : MonoBehaviour
         jumpValue = 0;
     }
 
-    void HandleSpacePressed()
-    {
-        // Add your logic for what should happen when Space key is pressed here
-        if (isGrounded)
-        {
-            anim.SetBool("Charging", true);
-            canChangeAnimation = false;
-            spacePressedLastFrame = true; // Set to true to track that Space key was pressed
-        }
-    }
-    
     void UpdateAnimation()
     {
         // Reset all animation states
@@ -128,33 +108,29 @@ public class JumpKingScript : MonoBehaviour
         anim.SetBool("Charging", false);
         anim.SetBool("Jumping", false);
         anim.SetBool("Falling", false);
-        anim.SetBool("Collide", false);
         anim.SetBool("Collapse", false);
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded|| Input.GetKey(KeyCode.Space) && isGrounded)
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded || Input.GetKey(KeyCode.Space) && isGrounded 
+            || Input.GetKeyDown(KeyCode.Space) && isGrounded && isCollidingWithWall || Input.GetKey(KeyCode.Space) && isGrounded && isCollidingWithWall)
         {
             anim.SetBool("Charging", true);
+        }             
+        else if (isCollidingWithWall)
+        {
+            anim.SetBool("Collide", true);
         }
         else if (rb.velocity.y > 0)
         {
-            if (isCollidingWithWall)
-            {
-                anim.SetBool("Collide", true);
-            }
-            else
-            {
-                anim.SetBool("Jumping", true);
-            }
+            anim.SetBool("Jumping", true);
         }
         else if (rb.velocity.y < 0)
         {
-            if (isCollidingWithWall)
+            anim.SetBool("Falling", true);
+
+            if (fallingHeight >= collapseThreshold && isGrounded)
             {
-                anim.SetBool("Collide", true);
-            }
-            else
-            {
-                anim.SetBool("Falling", true);
+                anim.SetBool("Collapse", true); // Trigger the collapse animation
             }
         }
         else if (moveInput != 0)
@@ -163,5 +139,4 @@ public class JumpKingScript : MonoBehaviour
             sprite.flipX = moveInput < 0; // Flip sprite when moving left
         }
     }
-
 }
