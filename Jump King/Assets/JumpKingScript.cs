@@ -10,12 +10,10 @@ public class JumpKingScript : MonoBehaviour
     public LayerMask groundMask;
     public LayerMask wallMask;
     public PhysicsMaterial2D BounceMat, NormalMat;
+    private Vector2 startingPosition;
 
     public float moveSpeed = 4f;
     public float moveInput;
-    public float collapseThreshold = 25.0f;
-    public float fallingHeight;
-    public float initialHeight;
 
 
     public bool isGrounded;
@@ -41,8 +39,8 @@ public class JumpKingScript : MonoBehaviour
 
         isGrounded = Physics2D.OverlapBox(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 0.5f),
         new Vector2(0.9f, 0.4f), 0f, groundMask);
-        isCollidingWithWall = Physics2D.OverlapBox(new Vector2(gameObject.transform.position.x + (moveInput > 0 ? 0.5f : -0.5f), gameObject.transform.position.y),
-        new Vector2(0.4f, 0.9f), 0f, wallMask);
+        isCollidingWithWall = Physics2D.OverlapBox(new Vector2(gameObject.transform.position.x + (moveInput >= 0 ? 0.4f : -0.4f), gameObject.transform.position.y),
+        new Vector2(0.225f, 0.9f), 0f, wallMask);
 
         if(!isGrounded)
         {
@@ -83,14 +81,6 @@ public class JumpKingScript : MonoBehaviour
             }
             canJump = true;
         }
-        
-        // Calculate falling height
-        if (!isGrounded && rb.velocity.y < 0 && initialHeight == 0)
-        {
-            initialHeight = transform.position.y;
-        }
-
-        fallingHeight = transform.position.y - initialHeight;
 
         UpdateAnimation();
     }        
@@ -108,7 +98,6 @@ public class JumpKingScript : MonoBehaviour
         anim.SetBool("Charging", false);
         anim.SetBool("Jumping", false);
         anim.SetBool("Falling", false);
-        anim.SetBool("Collapse", false);
 
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded || Input.GetKey(KeyCode.Space) && isGrounded 
@@ -125,13 +114,8 @@ public class JumpKingScript : MonoBehaviour
             anim.SetBool("Jumping", true);
         }
         else if (rb.velocity.y < 0)
-        {
+        {            
             anim.SetBool("Falling", true);
-
-            if (fallingHeight >= collapseThreshold && isGrounded)
-            {
-                anim.SetBool("Collapse", true); // Trigger the collapse animation
-            }
         }
         else if (moveInput != 0)
         {
