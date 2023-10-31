@@ -18,7 +18,7 @@ public class JumpKingScript : MonoBehaviour
 
     public bool isGrounded;
     public bool isCollidingWithWall;
-    public bool canJump;
+    public bool canJump = true;
     public float jumpValue = 0.0f;
 
     private void Start()
@@ -38,7 +38,7 @@ public class JumpKingScript : MonoBehaviour
         }
 
         isGrounded = Physics2D.OverlapBox(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 0.5f),
-        new Vector2(0.9f, 0.4f), 0f, groundMask);
+        new Vector2(0.8f, 0.4f), 0f, groundMask);
         isCollidingWithWall = Physics2D.OverlapBox(new Vector2(gameObject.transform.position.x + (moveInput >= 0 ? 0.4f : -0.4f), gameObject.transform.position.y),
         new Vector2(0.225f, 0.9f), 0f, wallMask);
 
@@ -55,7 +55,7 @@ public class JumpKingScript : MonoBehaviour
         if(Input.GetKey(KeyCode.Space) && isGrounded && canJump)
         {
             rb.velocity = new Vector2(0.0f, rb.velocity.y);
-            jumpValue += 0.1f;
+            jumpValue += 0.3f;
         }
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded && canJump)
         {
@@ -85,11 +85,11 @@ public class JumpKingScript : MonoBehaviour
         UpdateAnimation();
     }        
 
-    void ResetJump()
-    {
-        canJump = false;
-        jumpValue = 0;
-    }
+    // void ResetJump()
+    // {
+    //     canJump = false;
+    //     jumpValue = 0;
+    // }
 
     void UpdateAnimation()
     {

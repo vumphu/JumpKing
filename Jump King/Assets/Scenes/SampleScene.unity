@@ -1131,7 +1131,7 @@ MonoBehaviour:
   moveInput: 0
   isGrounded: 0
   isCollidingWithWall: 0
-  canJump: 0
+  canJump: 1
   jumpValue: 0
 --- !u!61 &1908372740
 BoxCollider2D:
