@@ -124,3 +124,4 @@ public class JumpKingScript : MonoBehaviour
         }
     }
 }
+
