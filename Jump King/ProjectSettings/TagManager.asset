@@ -38,6 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: groundtile
+    uniqueID: 713272403
+    locked: 0
+  - name: background
+    uniqueID: 159038549
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
