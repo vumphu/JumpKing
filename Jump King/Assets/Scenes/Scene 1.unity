@@ -200,7 +200,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7.8182025
+  orthographic size: 10.080043
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -225,7 +225,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 39.27, y: 7.98, z: -14.11}
+  m_LocalPosition: {x: 39.44, y: 9.29, z: -14.11}
   m_LocalScale: {x: 1.8550416, y: 2.0780888, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -555,6 +555,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1428584496}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &855524294
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 855524295}
+  - component: {fileID: 855524296}
+  m_Layer: 0
+  m_Name: DataPersistenceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &855524295
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855524294}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 40.144398, y: 7.218909, z: -14.079306}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &855524296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855524294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b39179e7a33185348af78655ab399749, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: JumpKingPlayerData.json
 --- !u!1 &921460071
 GameObject:
   m_ObjectHideFlags: 0
@@ -1094,7 +1139,7 @@ Rigidbody2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1329213562}
   m_BodyType: 2
-  m_Simulated: 1
+  m_Simulated: 0
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
@@ -6324,7 +6369,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 67f83f18c3273574aa53f01b3cd25752, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -6344,7 +6389,7 @@ CompositeCollider2D:
   m_GameObject: {fileID: 1575642468}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 67f83f18c3273574aa53f01b3cd25752, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -6387,7 +6432,7 @@ TilemapCollider2D:
   m_GameObject: {fileID: 1575642468}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 67f83f18c3273574aa53f01b3cd25752, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -6652,7 +6697,7 @@ Transform:
   m_GameObject: {fileID: 1908372734}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.0098220715, z: -0, w: 0.9999518}
-  m_LocalPosition: {x: 37.27, y: 2.51, z: -1.72}
+  m_LocalPosition: {x: 36.64, y: 2.39, z: -1.74}
   m_LocalScale: {x: 1.8550416, y: 2.0780888, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6788,3 +6833,4 @@ SceneRoots:
   - {fileID: 1908372736}
   - {fileID: 1428584496}
   - {fileID: 1265358613}
+  - {fileID: 855524295}

@@ -16,11 +16,23 @@ public class MainMenu : MonoBehaviour
 
     }
 
-    public void NewGame()
+    public void OnNewGameClicked()
     {
         SceneManager.LoadScene(1);
+        DataPersistenceManager.instance.NewGame();
     }
-
+    public void OnLoadGameClicked()
+    {
+        DataPersistenceManager.instance.LoadGame();
+    }
+    public void OnSaveGameClicked()
+    {
+        DataPersistenceManager.instance.SaveGame();
+    }
+    public void SaveGame()
+    {
+        
+    }
     public void OtherBabes()
     {
 

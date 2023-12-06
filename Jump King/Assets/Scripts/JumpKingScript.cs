@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpKingScript : MonoBehaviour
+public class JumpKingScript : MonoBehaviour, IDataPersistence
 {
     // Public variables for inspector access
     public Rigidbody2D rb;    
@@ -43,7 +43,7 @@ public class JumpKingScript : MonoBehaviour
 
         // Check if the character is grounded
         isGrounded = Physics2D.OverlapBox(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y - 0.5f),
-            new Vector2(1f, 1f), 0f, groundMask);
+            new Vector2(0.8f, 1.5f), 0f, groundMask);
 
         // Check if the character is colliding with a wall
         isCollidingWithWall = Physics2D.OverlapBox(new Vector2(gameObject.transform.position.x + (moveInput >= 0 ? 0.4f : -0.4f), gameObject.transform.position.y),
@@ -68,7 +68,7 @@ public class JumpKingScript : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded && canJump)
         {
-            jumpValue = 10f; // Set jump power directly
+            jumpValue = 15f; // Set jump power directly
             rb.velocity = new Vector2(0.0f, rb.velocity.y);
         }
 
@@ -125,5 +125,16 @@ public class JumpKingScript : MonoBehaviour
             anim.SetBool("Running", true);
             sprite.flipX = moveInput < 0; // Flip sprite when moving left
         }
+    }
+
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.playerPosition;
+        UnityEngine.Debug.Log("Loading");
+    }
+    public void SaveData(ref GameData data)
+    {
+        data.playerPosition = this.transform.position;
+        UnityEngine.Debug.Log("Saving");
     }
 }
