@@ -105,6 +105,10 @@ public class Dialogue : MonoBehaviour
         }        
     }
 
+    public bool IsDialogueRunning()
+    {
+        return started;
+    }
     private void Update()
     {
         if (!started)
