@@ -33,10 +33,6 @@ public class MainMenu : MonoBehaviour
     {
         
     }
-    public void OtherBabes()
-    {
-
-    }
 
     public void Options()
     {
