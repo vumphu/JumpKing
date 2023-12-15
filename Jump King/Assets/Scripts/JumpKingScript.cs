@@ -68,7 +68,7 @@ public class JumpKingScript : MonoBehaviour, IDataPersistence
         }
         if(Input.GetKeyDown(KeyCode.Space) && isGrounded && canJump)
         {
-            jumpValue = 15f; // Set jump power directly
+            jumpValue = 10f; // Set jump power directly
             rb.velocity = new Vector2(0.0f, rb.velocity.y);
         }
 
@@ -83,7 +83,7 @@ public class JumpKingScript : MonoBehaviour, IDataPersistence
         {
             if(isGrounded)
             {
-                moveSpeed = 15f;
+                moveSpeed = 12f;
                 rb.velocity = new Vector2(moveInput * moveSpeed , jumpValue);
                 jumpValue = 0.0f;
             }

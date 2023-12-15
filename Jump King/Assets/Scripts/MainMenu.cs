@@ -13,7 +13,7 @@ public class MainMenu : MonoBehaviour
 
     public void Continue()
     {
-
+        
     }
 
     public void OnNewGameClicked()
@@ -38,8 +38,4 @@ public class MainMenu : MonoBehaviour
 
     }
 
-    public void Options()
-    {
-
-    }
 }
