@@ -1,18 +1,58 @@
 using System.Diagnostics;
-using System.Collections;
-using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
-
-public class ravenscript : MonoBehaviour
+using Debug = UnityEngine.Debug;
+public class Ravenscript : MonoBehaviour
 {
+    private bool move = false;
+    [SerializeField] private GameObject[] targets;
+    [SerializeField] private float objectSpeed;
 
-    //Detect trigger with player
+    private int targetIndex = 0;
+    private GameObject nextPos;
+    private Animator anim;
+    void Start()
+    {
+        anim = gameObject.GetComponent<Animator>();
+        move = false;  // Set move to false to prevent unnecessary updates
+    }
+
+    // Detect trigger with player
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //If we triggerd the player enable playerdeteced and show indicator
-        if( other.tag == "Player")
+        // If we triggered the player, enable movement and show indicator
+        if (other.CompareTag("Player"))
         {
-            UnityEngine.Debug.Log("Collided with player");
+            anim.SetInteger("state",1);
+            move = true;
+            Debug.Log("Collided with player");
+        }
+    }
+
+    void Update()
+    {
+        if(move == true)
+        {
+            MoveGameObject();
+        }
+    }
+
+    void MoveGameObject()
+    {
+        if (Vector2.Distance(targets[targetIndex].transform.position, transform.position) < 0.1f)
+        {
+            targetIndex++;
+            if (targetIndex >= targets.Length)
+            {
+                targetIndex = 0;
+            }
+            nextPos = targets[targetIndex];
+            move = false;
+            anim.SetInteger("state",0);
+        }
+        else
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targets[targetIndex].transform.position, objectSpeed * Time.deltaTime);
         }
     }
 }

@@ -25,6 +25,7 @@ public class JumpKingScript : MonoBehaviour, IDataPersistence
 
     private void Start()
     {
+        Debug.Log("JumpKingScript Start");
         // Get necessary components at the start
         rb = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
@@ -89,7 +90,6 @@ public class JumpKingScript : MonoBehaviour, IDataPersistence
             }
             canJump = true;
         }
-
         UpdateAnimation(); // Update character animations
     }
 
@@ -127,14 +127,18 @@ public class JumpKingScript : MonoBehaviour, IDataPersistence
         }
     }
 
+    public void GetPosition()
+    {
+        Debug.Log(this.transform.position);
+    }
     public void LoadData(GameData data)
     {
         this.transform.position = data.playerPosition;
-        UnityEngine.Debug.Log("Loading");
     }
     public void SaveData(ref GameData data)
-    {
+    {   
+        Debug.Log("saving player...");
         data.playerPosition = this.transform.position;
-        UnityEngine.Debug.Log("Saving");
     }
+
 }

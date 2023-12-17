@@ -2,9 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
-public class MainMenu : MonoBehaviour
+using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
+public class MainMenu : Menu
 {
+    [Header("Menu Navigation")]
+    [SerializeField] private SaveSlotsMenu saveSlotsMenu;
+    
+    [Header("Menu Button")]
+
+    [SerializeField] public Button NewGameButton;
+    
+    [SerializeField] private Button LoadGameButton;
+    
+    private void Start()
+    {
+        // if(!DataPersistenceManager.instance.HasGameData)
+        // {
+        //     ContinueGameButton.interactable = false;
+        // }
+    }
+
     public void Quit()
     {
         Application.Quit();
@@ -18,12 +36,13 @@ public class MainMenu : MonoBehaviour
 
     public void OnNewGameClicked()
     {
-        SceneManager.LoadScene(1);
-        DataPersistenceManager.instance.NewGame();
+        saveSlotsMenu.ActivateMenu(false);
+        this.DeactivateMenu();
     }
     public void OnLoadGameClicked()
     {
-        DataPersistenceManager.instance.LoadGame();
+        saveSlotsMenu.ActivateMenu(true);
+        this.DeactivateMenu();
     }
     public void OnSaveGameClicked()
     {
@@ -37,5 +56,15 @@ public class MainMenu : MonoBehaviour
     public void Options()
     {
 
+    }
+
+    public void ActivateMenu()
+    {
+        this.gameObject.SetActive(true);
+    }
+
+    public void DeactivateMenu()
+    {
+        this.gameObject.SetActive(false);
     }
 }
