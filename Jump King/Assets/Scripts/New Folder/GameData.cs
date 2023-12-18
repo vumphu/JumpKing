@@ -10,6 +10,7 @@ public class GameData
     public Vector3 playerPosition;
     public Dictionary<string, bool> itemsCollected;
 
+    public bool oldManDialogueTriggered;
     public int ID { get; set; }
 
     //public SerializableDictionary<string, bool> itemsCollected;
@@ -18,6 +19,7 @@ public class GameData
     // the game starts with when there's no data to load
     public GameData()
     {
+        oldManDialogueTriggered = false;
         totalTimePlayed = 0;
         playerPosition = new Vector3(36.64f, 2.39f, -1.74f);
     }

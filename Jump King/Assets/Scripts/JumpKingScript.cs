@@ -12,9 +12,6 @@ public class JumpKingScript : MonoBehaviour, IDataPersistence
     public LayerMask wallMask;
     public PhysicsMaterial2D BounceMat, NormalMat;
     private Vector2 startingPosition;
-
-    private float startTime;
-
     private float timePlayed;
     // Variables for character movement
     public float moveSpeed = 5f; // Character movement speed
@@ -37,7 +34,6 @@ public class JumpKingScript : MonoBehaviour, IDataPersistence
 
     private void onResume()
     {
-        startTime = Time.deltaTime ;
     }
 
     private void onPause()

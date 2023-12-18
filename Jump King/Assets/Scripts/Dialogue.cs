@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Dialogue : MonoBehaviour
+public class Dialogue : MonoBehaviour, IDataPersistence
 {
     //Fields
     //Window
@@ -24,6 +24,8 @@ public class Dialogue : MonoBehaviour
     private bool started;
     //Wait for next boolean
     private bool waitForNext;
+
+    private bool triggeredOnce = false;
 
     private void Awake()
     {
@@ -52,7 +54,12 @@ public class Dialogue : MonoBehaviour
         ToggleWindow(true);
         //hide the indicator
         ToggleIndicator(false);
-        //Start with first dialogue
+        //Start with first dialogue or random index if triggered once
+        if(triggeredOnce == true)
+        {
+            GetDialogue(1);
+            return;
+        }
         GetDialogue(0);
     }
 
@@ -78,7 +85,8 @@ public class Dialogue : MonoBehaviour
         //Stop all Ienumerators
         StopAllCoroutines();
         //Hide the window
-        ToggleWindow(false);        
+        ToggleWindow(false);       
+        this.triggeredOnce = true;
     }
     //Writing logic
     IEnumerator Writing()
@@ -102,6 +110,7 @@ public class Dialogue : MonoBehaviour
         {
             //End this sentence and wait for the next one
             waitForNext = true;
+            UpdateDialogueFrameSize();
         }        
     }
 
@@ -133,5 +142,28 @@ public class Dialogue : MonoBehaviour
             }            
         }
     }
-
+    private void UpdateDialogueFrameSize()
+    {
+        // Get the preferred height of the text based on its content
+        float preferredHeight = dialogueText.preferredHeight;
+    
+        // Get the RectTransform of the dialogueText
+        RectTransform textRectTransform = dialogueText.GetComponent<RectTransform>();
+    
+        // Adjust the size of the dialogue frame based on the preferred height
+        textRectTransform.sizeDelta = new Vector2(textRectTransform.sizeDelta.x, preferredHeight);
+    
+        // You may also want to adjust the size of the window based on the preferred height
+        RectTransform windowRectTransform = window.GetComponent<RectTransform>();
+        windowRectTransform.sizeDelta = new Vector2(windowRectTransform.sizeDelta.x, preferredHeight);
+    }
+    
+    public void LoadData(GameData data)
+    {
+        this.triggeredOnce = data.oldManDialogueTriggered;
+    }
+    public void SaveData(ref GameData data)
+    {   
+        data.oldManDialogueTriggered = this.triggeredOnce;
+    }
 }

@@ -1211,7 +1211,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2233206787961205918, guid: e8458c4b2701f9749ae2dab0c481eb7c, type: 3}
       propertyPath: selectedProfileId
-      value: 2
+      value: test
       objectReference: {fileID: 0}
     - target: {fileID: 2233206787961205918, guid: e8458c4b2701f9749ae2dab0c481eb7c, type: 3}
       propertyPath: initializeDataIfNull

@@ -76,6 +76,7 @@ public class DialogueTrigger : MonoBehaviour
     private bool playerDetected;
 
     public Animator anim;
+
     private void Start()
     {
         // Get necessary components at the start
