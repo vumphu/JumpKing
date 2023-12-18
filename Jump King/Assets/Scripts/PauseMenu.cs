@@ -26,7 +26,6 @@ public class PauseMenu : MonoBehaviour
     }
     public void Pause()
     {
-        Debug.Log("clicked esc 2" + onPause);
 		Time.timeScale = 0.0f;
 		pauseMenu.SetActive(true);
 		Cursor.visible = true;
@@ -35,7 +34,6 @@ public class PauseMenu : MonoBehaviour
     }
     public void Resume()
     {
-        Debug.Log("clicked esc 2" + onPause);
 		Time.timeScale = 1.0f;
 		pauseMenu.SetActive(false);
 		Cursor.visible = false;
@@ -44,8 +42,13 @@ public class PauseMenu : MonoBehaviour
     }
 
     public void Home(int SceneID)
-    {
+    {   
+        DataPersistenceManager.instance.SaveGame();
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneID);
+    }
+    public void DoExitGame() 
+    {
+        Application.Quit();
     }
 }

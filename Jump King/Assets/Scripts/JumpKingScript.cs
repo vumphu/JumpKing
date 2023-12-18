@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 public class JumpKingScript : MonoBehaviour, IDataPersistence
 {
     // Public variables for inspector access
@@ -13,6 +13,9 @@ public class JumpKingScript : MonoBehaviour, IDataPersistence
     public PhysicsMaterial2D BounceMat, NormalMat;
     private Vector2 startingPosition;
 
+    private float startTime;
+
+    private float timePlayed;
     // Variables for character movement
     public float moveSpeed = 5f; // Character movement speed
     public float moveInput; // Input for character movement
@@ -32,8 +35,20 @@ public class JumpKingScript : MonoBehaviour, IDataPersistence
         sprite = gameObject.GetComponent<SpriteRenderer>();
     }
 
+    private void onResume()
+    {
+        startTime = Time.deltaTime ;
+    }
+
+    private void onPause()
+    {
+        DataPersistenceManager.instance.SaveGame(); 
+    }
+
     private void Update()
     {
+        
+        timePlayed += Time.deltaTime;
         moveInput = Input.GetAxis("Horizontal"); // Get horizontal input
 
         // Move the character horizontally if not jumping
@@ -133,11 +148,13 @@ public class JumpKingScript : MonoBehaviour, IDataPersistence
     }
     public void LoadData(GameData data)
     {
+        this.timePlayed = data.totalTimePlayed;
         this.transform.position = data.playerPosition;
     }
     public void SaveData(ref GameData data)
     {   
         Debug.Log("saving player...");
+        data.totalTimePlayed = timePlayed;
         data.playerPosition = this.transform.position;
     }
 

@@ -35,7 +35,7 @@ public class SaveSlot : MonoBehaviour
         {
             noDataContent.SetActive(false);
             hasDataContent.SetActive(true);
-            totalTimePlayedText.text = "Total time played:" + gameData.GetPosition();
+            totalTimePlayedText.text = "Total time played:" + gameData.GetTimePlayed();
         }
     }
 

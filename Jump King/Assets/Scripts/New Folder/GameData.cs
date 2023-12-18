@@ -18,7 +18,7 @@ public class GameData
     // the game starts with when there's no data to load
     public GameData()
     {
-        totalTimePlayed = 0.0f;
+        totalTimePlayed = 0;
         playerPosition = new Vector3(36.64f, 2.39f, -1.74f);
     }
     public float GetPosition()
