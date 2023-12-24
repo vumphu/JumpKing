@@ -7,6 +7,8 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] public GameObject pauseMenu;
 
+    [SerializeField] public GameObject settingMenu;
+
     private static bool onPause = false;
 
     void Update()
@@ -14,7 +16,7 @@ public class PauseMenu : MonoBehaviour
         Debug.Log(onPause);
         if(Input.GetKeyDown(KeyCode.Escape))
         { 
-            if (onPause) {
+            if (onPause == true) {
                 Resume();
 		    }else
             {
@@ -39,6 +41,11 @@ public class PauseMenu : MonoBehaviour
 		Cursor.visible = false;
 		// Camera.audio.Pause ();
 		onPause = false;
+    }
+
+    public void Setting()
+    {
+        settingMenu.SetActive(true);
     }
 
     public void Home(int SceneID)
